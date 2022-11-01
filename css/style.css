@@ -1,0 +1,282 @@
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+main {
+    width: 100%;
+    padding: 0 100px;
+}
+
+header {
+    min-height: 500px;
+    margin-bottom: 40px;
+    background: url('https://www.newstatesman.com/wp-content/uploads/sites/2/2021/06/gettyimages-1283947331-scaled.jpg');
+}
+
+.header__title {
+    display: block;
+    font-weight: 700;
+    margin: 0 auto; 
+    font-size: 64px;
+    padding-top: 200px;
+    text-align: center;
+    text-shadow: 15px 20px 15px #000;
+    color: #fff
+}
+
+.book-list-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 0;
+}
+
+.book-tab {
+    display: flex;
+    justify-content: space-between;
+    margin: 25px;
+    box-shadow: 5px 5px 20px 10px rgba(0, 0, 0, 0.3);
+}
+
+.book__img {
+    height: 500px;
+    width: 325px;
+}
+.book__info {
+    width: 300px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 30px;
+}
+
+.book__author {
+    font-size: 25px;
+}
+
+.book__name {
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 30px;
+}
+
+.book__price {
+    margin: 20px 0px;
+    font-size: 20px;
+    color: #b93114;
+    font-weight: bold;
+    text-shadow: 0px 1px 22px #000;
+}
+.show-more {
+    text-decoration: none;
+    color: #000;
+    /* text-shadow: 0px 1px 4px #000; */
+    margin-right: 15px;
+    font-style: italic;
+    font-size: 20px;
+}
+.show-more:hover {
+    color: #b93114;
+}
+
+.add-to-bag {
+    background-color: #000;
+    width: 110px;
+    height: 40px;
+    color: #fff;
+    border: 0;
+}
+.add-to-bag:hover{
+    box-shadow: 5px 5px 40px 5px rgba(0, 0, 0, 0.3);
+}
+.popUp-bg {
+    position: relative;
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+}
+.popUp__window {
+    background-color: #fff;
+    width: 700px;
+    margin: 0 auto;
+    margin-top: 100px;
+    min-height: 900px;
+    padding: 50px 70px;
+}
+.popUp__name {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.popUp__author {
+    text-align: center;
+    font-size: 25px;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+.popUp__descr {
+    font-size: 20px;
+}
+.bag {
+    position: relative;
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.bag__window {
+    position: absolute;
+    background-color: #fff;
+    width: 1000px;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 50px 70px;
+}
+.bag__menu {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 80px;
+    max-height: 70px;
+}
+.bag__total {
+    font-size: 30px;
+    color: #b93114;
+    font-weight: bold;
+    padding-top: 15px;
+}
+.bag__order {
+    background-color: #b93114;
+    border: 0;
+    border-radius: 10%;
+    padding: 0 30px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    height: 70px;
+}
+
+.bag__item {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 30px;
+    height: 80px;
+}
+.bag__info {
+    display: flex;
+}
+.bag-price {
+    display: inline-block;
+    margin: 0;
+    font-size: 30px;
+    text-align: right;
+}
+.bag-name {
+    padding: 0;
+}
+.bag__delete {
+    display: inline-block;
+    margin-left: 50px;
+    font-size: 25px;
+    background-color: #b93114;
+    border-radius: 10%;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.order-form {
+    position: relative;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: 400px;
+    min-height: 600px;
+    background: #fff;
+    padding: 0px 20px 10px 20px;
+}
+.order-input:invalid {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+    border: 2px solid red;
+    border-radius: 5%;
+}
+.order-input:valid {
+    border: 2px solid green;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 5%;
+}
+.order-btn {
+    padding: 10px 15px;
+    margin-top: 20px;
+    background-color: #b93114;
+    color: #fff;
+    border: 0;
+    font-weight: bold;
+    font-size: 20px;
+}
+h3 {
+    text-align: center;
+    padding-bottom: 15px;
+    margin-top: -20px;
+}
+.input {
+    display: flex;
+}
+.close {
+    /* position: absolute; */
+    color: #000;
+    font-size: 50px;
+    right: 730px;
+    cursor: pointer;
+    top: 100px;
+}
+.small__title {
+    font-size: 20px;
+    color: #b93114;
+    text-align: center;
+}
+.shopping-bag {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+}
+.shopping-bag__icon {
+    position: fixed;
+    right: 50px;
+    bottom: 30px;
+    width: 100px;
+    cursor: pointer;
+    background: #fff;
+    object-fit: fill;
+    border-radius: 10%;
+    padding: 10px;
+    box-shadow: 0px 0px 15px 10px rgba(103, 5, 5, 0.7);
+}
+.shopping-bag__icon:hover {
+    padding: 7px;
+    box-shadow: 0px 0px 25px 10px rgba(103, 5, 5, 0.7);
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
+}
+.helper {
+    position: absolute;
+    top: 30%;
+    left: 80%;
+    background-color:rgba(103, 5, 5, 0.7);
+    width: 300px;
+    min-height: 70px;
+    color: #fff;
+    padding: 30px;
+}
