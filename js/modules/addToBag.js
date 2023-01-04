@@ -93,9 +93,9 @@ function formBag() {
     const bagWindow = document.querySelector('.bag__window');
 
     createLoading(bagWindow);
-    getResource('http://localhost:3000/booksDB')
+    getResource('https://github.com/IrMakDak/BooksShop/blob/8550da76d711214d5194ae5070a10475635ddc74/booksDB.json/')
         .then(data => {
-            data.forEach((item) => {
+            data.booksDB.forEach((item) => {
                 if (isItInLocal(item.bookName)) {
                    
                     const elem = document.createElement('div');

@@ -114,9 +114,9 @@ function formBag() {
     const bagWindow = document.querySelector('.bag__window');
 
     (0,_loading__WEBPACK_IMPORTED_MODULE_5__.createLoading)(bagWindow);
-    (0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)('http://localhost:3000/booksDB')
+    (0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)('https://github.com/IrMakDak/BooksShop/blob/8550da76d711214d5194ae5070a10475635ddc74/booksDB.json/')
         .then(data => {
-            data.forEach((item) => {
+            data.booksDB.forEach((item) => {
                 if ((0,_localStorage__WEBPACK_IMPORTED_MODULE_1__.isItInLocal)(item.bookName)) {
                    
                     const elem = document.createElement('div');
@@ -749,9 +749,9 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }) 
 
-    ;(0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)('http://localhost:3000/booksDB')
+    ;(0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)('https://github.com/IrMakDak/BooksShop/blob/8550da76d711214d5194ae5070a10475635ddc74/booksDB.json/')
         .then(data => {
-            data.forEach(({src, alt, author, bookName, price, descr, id}) => {
+            data.booksDB.forEach(({src, alt, author, bookName, price, descr, id}) => {
                 new _modules_book_tabs__WEBPACK_IMPORTED_MODULE_0__["default"](src, alt, author, bookName, price, descr, id, 'ul').render();
             });
         })

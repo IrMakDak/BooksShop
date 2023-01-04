@@ -46,9 +46,9 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }) 
 
-    getResource('http://localhost:3000/booksDB')
+    getResource('https://github.com/IrMakDak/BooksShop/blob/8550da76d711214d5194ae5070a10475635ddc74/booksDB.json/')
         .then(data => {
-            data.forEach(({src, alt, author, bookName, price, descr, id}) => {
+            data.booksDB.forEach(({src, alt, author, bookName, price, descr, id}) => {
                 new BookTab(src, alt, author, bookName, price, descr, id, 'ul').render();
             });
         })
