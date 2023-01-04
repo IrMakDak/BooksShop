@@ -18,6 +18,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/services */ "./js/services/services.js");
 /* harmony import */ var _openModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./openModal */ "./js/modules/openModal.js");
 /* harmony import */ var _orderForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./orderForm */ "./js/modules/orderForm.js");
+/* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./loading */ "./js/modules/loading.js");
+
 
 
 
@@ -40,29 +42,29 @@ function findAllPrices() {
 function countTotal(delThisPrice) {
 
     let priceArr = findAllPrices();
-    let total = document.querySelector('.bag__total');
+    const total = document.querySelector('.bag__total');
+    console.log(total);
 
     let counter = true;
     priceArr = priceArr.map((num) => {
         
         num = Number.parseFloat(num).toFixed(2);
-
-        if (num == delThisPrice && counter === 'true') {
+        console.log(num);
+        console.log(delThisPrice)
+        if (delThisPrice && num == delThisPrice && counter === 'true') {
             counter = false;
             return 0
         } else {
             return num            
         }
     });
-
+    console.log(priceArr)
     let totalPrice = Number(priceArr.reduce(
         (previousValue, currentValue) => +previousValue + +currentValue, 0));
-    
+    console.log('total',totalPrice)
     totalPrice = totalPrice.toFixed(2);
 
-    total.innerHTML = `
-        Итого: ${totalPrice}$
-    `;
+    total.innerHTML = `Total: ${'' + totalPrice}$`;
     (0,_orderForm__WEBPACK_IMPORTED_MODULE_4__["default"])(totalPrice);
     return totalPrice;
 }
@@ -111,6 +113,7 @@ function clickAddToBag(bag, shoppingBag) {
 function formBag() {  
     const bagWindow = document.querySelector('.bag__window');
 
+    (0,_loading__WEBPACK_IMPORTED_MODULE_5__.createLoading)(bagWindow);
     (0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)('http://localhost:3000/booksDB')
         .then(data => {
             data.forEach((item) => {
@@ -136,8 +139,10 @@ function formBag() {
             })
         })
         .then(() => {
+            countTotal(0);
+            (0,_loading__WEBPACK_IMPORTED_MODULE_5__.hideLoading)(bagWindow);
             delFromBag(bagWindow.querySelectorAll('.bag__delete'), '.bag__item');
-            countTotal();
+            
         })
     
 }
@@ -150,8 +155,8 @@ function openBag(bag) {
             <div class='bag__window'>
                 <div class='bag__menu'>
                     <div class='close'>&#10006;</div>
-                    <div class='bag__total'>Итого: </div>
-                    <button class='bag__order'>Оформить</button>
+                    <div class='bag__total'>Total: </div>
+                    <button class='bag__order'>Confirm </button>
                 </div>
             </div>
         `;
@@ -175,7 +180,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 
 class BookTab {
-    constructor(src, alt, author, bookName, price, descr, parent) {
+    constructor(src, alt, author, bookName, price, descr, id, parent) {
         this.src = src;
         this.alt = alt;
         this.author = author;
@@ -183,6 +188,7 @@ class BookTab {
         this.price = price;
         this.parent = document.querySelector(parent);
         this.descr = descr;
+        this.id = id;
     }
     render() {
         const element = document.createElement('li');
@@ -193,7 +199,7 @@ class BookTab {
                     <div class="book__author">${this.author}</div>
                     <div class="book__name">${this.bookName}</div>
                     <div class="book__price">${this.price}$</div>
-                    <a href="#" class="show-more">Show more</a>
+                    <a href="#" class="show-more" data-id="${this.id}">Show more</a>
                     <button class="add-to-bag">Add to bag</button>
                     <div class='book__descr hide'>
                         ${this.descr}
@@ -226,6 +232,7 @@ function closeModal(modal) {
 
     modal.classList.add('hide');
     modal.classList.remove('show');
+    document.body.style = "";
 
     const shoppingBag = document.querySelector('.shopping-bag__icon');
     if (shoppingBag.classList.contains('hide')){
@@ -242,6 +249,13 @@ function pressCloseModal(modalSelector) {
             closeModal(modal);
             if (modalSelector === '.order-bg') {
                 (0,_openModal__WEBPACK_IMPORTED_MODULE_0__["default"])(document.querySelector('.bag'));
+                const inputs = document.querySelectorAll("input");
+                inputs.forEach(i => {
+                    i.value = "";
+                    if (i.type === 'checkbox') {
+                        i.checked = false;
+                    }
+                }) 
             }   
         }
     })
@@ -251,6 +265,13 @@ function pressCloseModal(modalSelector) {
             closeModal(modal);
             if (modalSelector === '.order-bg') {
                 (0,_openModal__WEBPACK_IMPORTED_MODULE_0__["default"])(document.querySelector('.bag'));
+                const inputs = document.querySelectorAll("input");
+                inputs.forEach(i => {
+                    i.value = "";
+                    if (i.type === 'checkbox') {
+                        i.checked = false;
+                    }
+                }) 
             }
         }
     })
@@ -258,6 +279,33 @@ function pressCloseModal(modalSelector) {
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pressCloseModal);
+
+/***/ }),
+
+/***/ "./js/modules/loading.js":
+/*!*******************************!*\
+  !*** ./js/modules/loading.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createLoading": () => (/* binding */ createLoading),
+/* harmony export */   "hideLoading": () => (/* binding */ hideLoading)
+/* harmony export */ });
+function createLoading (parent) {
+    let loading = document.createElement("h2");
+    loading.classList.add("loading");
+    loading.textContent = "Loading..."
+
+    parent.append(loading);
+}
+
+function hideLoading (parent) {
+    parent.querySelector('.loading').remove();
+}
+
+
 
 /***/ }),
 
@@ -396,6 +444,7 @@ __webpack_require__.r(__webpack_exports__);
 function showModal(modal) {
     modal.classList.remove('hide');
     modal.classList.add('show');
+    document.body.style = "overflow: hidden";
 
     const shoppingBag = document.querySelector('.shopping-bag__icon');
     if (shoppingBag.classList.contains('show')) {
@@ -481,71 +530,57 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function createOrderForm (totalPrice) {
+
     const makeOrder = document.querySelector('.bag__order');
 
     makeOrder.addEventListener('click', () => {
         const price = totalPrice;
-        console.log('price = ', price);
 
         const orderBG = document.querySelector('.order-bg');
+        const inputs = orderBG.querySelectorAll('input');
+        const orderBtn = orderBG.querySelector('.order-btn');
+        const orderForm = orderBG.querySelector('.order-form');
+        const inputData = document.querySelector('.order-data');
+
+        const data = new FormData(orderForm);
+        data.gifts = [];
+        console.log(orderBtn)
+        orderBtn.setAttribute("disabled", "true");
+
+        inputs.forEach(item => {
+            item.addEventListener("change", () => {
+                if (item.type === 'radio') {
+                    data.pay = item.value;
+                }
+                if (item.type === 'checkbox') {
+
+                    if (item.checked === false) {
+                        data.gifts = data.gifts.filter(i => i !== item.value)
+                    }
+                    if (item.checked === true) {
+                        if (data.gifts.length >= 2) {
+                            item.checked = false;
+                            (0,_modalHelp__WEBPACK_IMPORTED_MODULE_2__["default"])(document.querySelector('.order-btn'), "Choose 2 gifts")
+                        } else {
+                            console.log("added", item)
+                            data.gifts.push(item.value);
+                        }
+                    } 
+                }
+                if (orderForm.checkValidity() && orderBtn.getAttribute("disabled")) {
+                    orderBtn.removeAttribute("disabled");
+                } 
+                if (!orderForm.checkValidity() && !orderBtn.getAttribute("disabled")) {
+                    orderBtn.setAttribute("disabled", "true");
+                } 
+            })
+        })
+ 
+
         let bag = document.querySelector('.bag');
         (0,_closeModal__WEBPACK_IMPORTED_MODULE_1__.closeModal)(bag);
         (0,_openModal__WEBPACK_IMPORTED_MODULE_0__["default"])(orderBG); 
         (0,_closeModal__WEBPACK_IMPORTED_MODULE_1__["default"])('.order-bg');
-
-
-        orderBG.innerHTML = `
-            <form class="order-form">
-                <div class='close'>&#10006;</div>
-                <h3>Оформить заказ</h3>
-                <input placeholder="Ваше имя: " class='order-name order-input' required type="text" pattern="^[a-zA-Z]+$" minlength="4">
-
-                <input placeholder="Ваша фамилия: " class='order-surname order-input' required type="text" pattern="^[a-zA-Z]+$" minlength="5">
-
-                <input placeholder="Дата доставки: " class='order-data order-input' required type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](202[2-3])">
-
-                <input placeholder="Улица: " class='order-street order-input' required type="text" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$" minlength="5">
-
-                <input placeholder="Номер дома: " class='order-house order-input' required type="text" pattern="^[0-9]+$">
-
-                <input placeholder="Номер телефона: " class='order-phone order-input' required pattern="([^\-]{1})+((([0-9]|[\-]){9,}))">
-                <div class='small__title'>Оплата</div>
-                <div class='input'>
-                    <input type='radio' id='radio1' name='pay' value='cash'>
-                    <label for='radio1'>Наличные</label>
-                </div>
-                <div class='input'>
-                    <input type='radio' id='ratio2' name='pay' value='card'>
-                    <label for='ratio2'>Карта</label>
-                </div>
-                <div class='small__title'>Выбери 2 подарка</div>
-                <div class='input'>
-                    <input type="checkbox" id="check1" name="gift" value="wrapper">
-                    <label for="check1">упаковка в подарок</label>
-                </div>
-                <div class='input'>
-                    <input type="checkbox" id="check2" name="gift" value="postcard">
-                    <label for="check2">добавить открытку</label>
-                </div>
-                <div class='input'>
-                    <input type="checkbox" id="check3" name="gift" value="sale">
-                    <label for="check3">предоставить скидку 2% на следующий раз</label>
-                </div>
-                <div class='input'>
-                    <input type="checkbox" id="check4" name="gift" value="pen">
-                    <label for="check4">фирменная ручка или карандаш </label>
-                </div>
-                
-                <div class='bag__total'>${price}$</div>
-                <button type='submit' class='order-btn'>Завершить</button>
-            </form>
-        `;
-        const orderBtn = orderBG.querySelector('.order-btn');
-        const orderForm = orderBG.querySelector('.order-form');
-        const inputs = orderBG.querySelectorAll('input');
-        // let selected = {};
-
-        const inputData = document.querySelector('.order-data');
 
         inputData.addEventListener('click', () => {
             (0,_modalHelp__WEBPACK_IMPORTED_MODULE_2__["default"])(orderForm, 'Дата в формате XX/XX/XXXX');
@@ -555,32 +590,18 @@ function createOrderForm (totalPrice) {
 
             e.preventDefault();
 
-            const data = new FormData(orderForm);
-            data.gifts = [];
-            let pres = 0;
+            if (!data.pay) {
+                data.pay = "cash";
+            }
 
             data.name = document.querySelector('.order-name').value;
             data.surname = document.querySelector('.order-surname').value;
             data.deliveryData = document.querySelector('.order-data').value;
             data.street = document.querySelector('.order-street').value;
             data.house = document.querySelector('.order-house').value;
-            data.phone = document.querySelector('.order-phone').value;
+            data.flat = document.querySelector('.order-flat').value;
 
-
-            inputs.forEach(item => {
-                if (item.name === 'pay' && item.type === 'radio') {
-                    data.pay = item.value;
-                }
-                if (item.name === 'gift' && item.type === 'checkbox' && item.checked == true) {
-                    data.gifts[pres] = item.value;
-                    pres++;
-                    if (pres >= 3) {
-                        item.checked = false;
-                        (0,_modalHelp__WEBPACK_IMPORTED_MODULE_2__["default"])(document.querySelector('.order-btn'), 'Вы можете выбрать только 2 подарка')
-                    } 
-                }
-            })    
-            console.log(data);
+            console.log(data)
         })
     })
 }
@@ -679,6 +700,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/services */ "./js/services/services.js");
 /* harmony import */ var _modules_addToBag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/addToBag */ "./js/modules/addToBag.js");
 /* harmony import */ var _modules_moveMouse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/moveMouse */ "./js/modules/moveMouse.js");
+/* harmony import */ var _modules_loading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/loading */ "./js/modules/loading.js");
+
 
 
 
@@ -691,6 +714,7 @@ window.addEventListener('DOMContentLoaded', function() {
     popUp.classList.add('popUp', 'popUp-bg','hide');
 
     const main = document.querySelector('main');
+    (0,_modules_loading__WEBPACK_IMPORTED_MODULE_5__.createLoading)(main);
 
     const header = document.createElement('header');
 
@@ -710,32 +734,38 @@ window.addEventListener('DOMContentLoaded', function() {
         <img src='icons/shopping-bag.svg' class='shopping-bag__icon show'></img>
     `;
 
-    const orderBG = this.document.createElement('div');
-    orderBG.classList.add('popUp-bg', 'hide', 'order-bg');
-
     document.body.prepend(header);
     document.body.prepend(popUp);
-    document.body.prepend(orderBG);
     header.append(headerOne);
     main.append(ul);
     main.append(bag);
     main.append(shoppingBag);
 
-    (0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)('http://localhost:3000/booksDB')
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach(i => {
+        i.value = "";
+        if (i.type === 'checkbox') {
+            i.checked = false;
+        }
+    }) 
+
+    ;(0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)('http://localhost:3000/booksDB')
         .then(data => {
-            data.forEach(({src, alt, author, bookName, price, descr}) => {
-                new _modules_book_tabs__WEBPACK_IMPORTED_MODULE_0__["default"](src, alt, author, bookName, price, descr, 'ul').render();
+            data.forEach(({src, alt, author, bookName, price, descr, id}) => {
+                new _modules_book_tabs__WEBPACK_IMPORTED_MODULE_0__["default"](src, alt, author, bookName, price, descr, id, 'ul').render();
             });
         })
         .then(() => {
+            (0,_modules_loading__WEBPACK_IMPORTED_MODULE_5__.hideLoading)(main);
+        })
+        .then(() => {
+
             (0,_modules_openPopUp__WEBPACK_IMPORTED_MODULE_1__["default"])(popUp);
             (0,_modules_addToBag__WEBPACK_IMPORTED_MODULE_3__["default"])(bag, shoppingBag);
             (0,_modules_moveMouse__WEBPACK_IMPORTED_MODULE_4__["default"])();
         }) 
 });
-// const myAwesomeObject = { 
-//     name : "Bill", 
-console.log(typeof(10n));
+
 })();
 
 /******/ })()

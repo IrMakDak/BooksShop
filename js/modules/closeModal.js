@@ -4,6 +4,7 @@ function closeModal(modal) {
 
     modal.classList.add('hide');
     modal.classList.remove('show');
+    document.body.style = "";
 
     const shoppingBag = document.querySelector('.shopping-bag__icon');
     if (shoppingBag.classList.contains('hide')){
@@ -20,6 +21,13 @@ function pressCloseModal(modalSelector) {
             closeModal(modal);
             if (modalSelector === '.order-bg') {
                 showModal(document.querySelector('.bag'));
+                const inputs = document.querySelectorAll("input");
+                inputs.forEach(i => {
+                    i.value = "";
+                    if (i.type === 'checkbox') {
+                        i.checked = false;
+                    }
+                }) 
             }   
         }
     })
@@ -29,6 +37,13 @@ function pressCloseModal(modalSelector) {
             closeModal(modal);
             if (modalSelector === '.order-bg') {
                 showModal(document.querySelector('.bag'));
+                const inputs = document.querySelectorAll("input");
+                inputs.forEach(i => {
+                    i.value = "";
+                    if (i.type === 'checkbox') {
+                        i.checked = false;
+                    }
+                }) 
             }
         }
     })

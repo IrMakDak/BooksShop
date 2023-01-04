@@ -10,7 +10,7 @@ main {
 header {
     min-height: 500px;
     margin-bottom: 40px;
-    background: url('https://www.newstatesman.com/wp-content/uploads/sites/2/2021/06/gettyimages-1283947331-scaled.jpg');
+    background: url('https://images.photowall.com/products/57491/greatest-bookshop-in-the-world.jpg?h=699&q=85');
 }
 
 .header__title {
@@ -39,8 +39,8 @@ header {
 }
 
 .book__img {
-    height: 500px;
-    width: 325px;
+    height: 400px;
+    max-width: 300px;
 }
 .book__info {
     width: 300px;
@@ -88,8 +88,9 @@ header {
     box-shadow: 5px 5px 40px 5px rgba(0, 0, 0, 0.3);
 }
 .popUp-bg {
-    position: relative;
     position: fixed;
+    top: 0;
+    left: 0;
     background: rgba(0, 0, 0, .5);
     width: 100%;
     height: 100%;
@@ -129,7 +130,7 @@ header {
 .bag__window {
     position: absolute;
     background-color: #fff;
-    width: 1000px;
+    width: 850px;
     top: 0;
     right: 0;
     height: 100%;
@@ -198,6 +199,7 @@ header {
     background: #fff;
     padding: 0px 20px 10px 20px;
 }
+
 .order-input:invalid {
     width: 100%;
     height: 50px;
@@ -264,12 +266,6 @@ h3 {
     padding: 7px;
     box-shadow: 0px 0px 25px 10px rgba(103, 5, 5, 0.7);
 }
-.show {
-    display: block;
-}
-.hide {
-    display: none;
-}
 .helper {
     position: absolute;
     top: 30%;
@@ -279,4 +275,14 @@ h3 {
     min-height: 70px;
     color: #fff;
     padding: 30px;
+}
+.loading {
+    display: block;
+    text-align: center;
+}
+.show {
+    display: block;
+}
+.hide {
+    display: none;
 }

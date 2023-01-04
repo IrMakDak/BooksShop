@@ -3,6 +3,7 @@ import openPopUp from "./modules/openPopUp";
 import {getResource} from './services/services';
 import clickAddToBag from './modules/addToBag';
 import moveMouse from './modules/moveMouse';
+import { createLoading, hideLoading } from "./modules/loading";
 
 window.addEventListener('DOMContentLoaded', function() {
 
@@ -10,6 +11,7 @@ window.addEventListener('DOMContentLoaded', function() {
     popUp.classList.add('popUp', 'popUp-bg','hide');
 
     const main = document.querySelector('main');
+    createLoading(main);
 
     const header = document.createElement('header');
 
@@ -29,29 +31,34 @@ window.addEventListener('DOMContentLoaded', function() {
         <img src='icons/shopping-bag.svg' class='shopping-bag__icon show'></img>
     `;
 
-    const orderBG = this.document.createElement('div');
-    orderBG.classList.add('popUp-bg', 'hide', 'order-bg');
-
     document.body.prepend(header);
     document.body.prepend(popUp);
-    document.body.prepend(orderBG);
     header.append(headerOne);
     main.append(ul);
     main.append(bag);
     main.append(shoppingBag);
 
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach(i => {
+        i.value = "";
+        if (i.type === 'checkbox') {
+            i.checked = false;
+        }
+    }) 
+
     getResource('http://localhost:3000/booksDB')
         .then(data => {
-            data.forEach(({src, alt, author, bookName, price, descr}) => {
-                new BookTab(src, alt, author, bookName, price, descr, 'ul').render();
+            data.forEach(({src, alt, author, bookName, price, descr, id}) => {
+                new BookTab(src, alt, author, bookName, price, descr, id, 'ul').render();
             });
         })
         .then(() => {
+            hideLoading(main);
+        })
+        .then(() => {
+
             openPopUp(popUp);
             clickAddToBag(bag, shoppingBag);
             moveMouse();
         }) 
 });
-// const myAwesomeObject = { 
-//     name : "Bill", 
-console.log(typeof(10n));

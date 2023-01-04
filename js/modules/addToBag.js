@@ -4,6 +4,7 @@ import { isItInLocal } from "./localStorage";
 import {getResource} from '../services/services';
 import showModal from "./openModal";
 import createOrderForm from "./orderForm";
+import { createLoading, hideLoading } from "./loading";
 
 // return array of all prices in bag 
 function findAllPrices() {
@@ -20,29 +21,29 @@ function findAllPrices() {
 function countTotal(delThisPrice) {
 
     let priceArr = findAllPrices();
-    let total = document.querySelector('.bag__total');
+    const total = document.querySelector('.bag__total');
+    console.log(total);
 
     let counter = true;
     priceArr = priceArr.map((num) => {
         
         num = Number.parseFloat(num).toFixed(2);
-
-        if (num == delThisPrice && counter === 'true') {
+        console.log(num);
+        console.log(delThisPrice)
+        if (delThisPrice && num == delThisPrice && counter === 'true') {
             counter = false;
             return 0
         } else {
             return num            
         }
     });
-
+    console.log(priceArr)
     let totalPrice = Number(priceArr.reduce(
         (previousValue, currentValue) => +previousValue + +currentValue, 0));
-    
+    console.log('total',totalPrice)
     totalPrice = totalPrice.toFixed(2);
 
-    total.innerHTML = `
-        Итого: ${totalPrice}$
-    `;
+    total.innerHTML = `Total: ${'' + totalPrice}$`;
     createOrderForm(totalPrice);
     return totalPrice;
 }
@@ -91,6 +92,7 @@ function clickAddToBag(bag, shoppingBag) {
 function formBag() {  
     const bagWindow = document.querySelector('.bag__window');
 
+    createLoading(bagWindow);
     getResource('http://localhost:3000/booksDB')
         .then(data => {
             data.forEach((item) => {
@@ -116,8 +118,10 @@ function formBag() {
             })
         })
         .then(() => {
+            countTotal(0);
+            hideLoading(bagWindow);
             delFromBag(bagWindow.querySelectorAll('.bag__delete'), '.bag__item');
-            countTotal();
+            
         })
     
 }
@@ -130,8 +134,8 @@ function openBag(bag) {
             <div class='bag__window'>
                 <div class='bag__menu'>
                     <div class='close'>&#10006;</div>
-                    <div class='bag__total'>Итого: </div>
-                    <button class='bag__order'>Оформить</button>
+                    <div class='bag__total'>Total: </div>
+                    <button class='bag__order'>Confirm </button>
                 </div>
             </div>
         `;

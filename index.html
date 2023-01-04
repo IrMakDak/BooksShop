@@ -13,6 +13,53 @@
 </head>
 <body>
      <main>   
+        <div class="popUp-bg hide order-bg">
+            <form class="order-form">
+                <div class='close'>&#10006;</div>
+                <h3>Order form</h3>
+                <input placeholder="Name: " class='order-name order-input' required type="text" pattern="^[a-zA-Z]+$" minlength="4">
+
+                <input placeholder="Surname: " class='order-surname order-input' required type="text" pattern="^[a-zA-Z]+$" minlength="5">
+
+                <input placeholder="Delivery date: " class='order-data order-input' required type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](202[2-3])">
+
+                <input placeholder="Street: " class='order-street order-input' required type="text" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$" minlength="5">
+
+                <input placeholder="House number: " class='order-house order-input' required type="text" pattern="^[0-9]+$">
+
+                <input placeholder="Flat number: " class='order-flat order-input' required type="text" pattern="[0-9]|[0-9][0-9-]+$">
+
+                <div class='small__title'>Payment type</div>
+                <div class='input'>
+                    <input type='radio' id='radio1' name='pay' value='cash'>
+                    <label for='radio1'>Cash</label>
+                </div>
+                <div class='input'>
+                    <input type='radio' id='ratio2' name='pay' value='card'>
+                    <label for='ratio2'>Card</label>
+                </div>
+                <div class='small__title'>Choose 2 gifts</div>
+                <div class='input'>
+                    <input type="checkbox" id="check1" name="gift" value="wrapper">
+                    <label for="check1">Pack as a gift</label>
+                </div>
+                <div class='input'>
+                    <input type="checkbox" id="check2" name="gift" value="postcard">
+                    <label for="check2">Add postcard</label>
+                </div>
+                <div class='input'>
+                    <input type="checkbox" id="check3" name="gift" value="sale">
+                    <label for="check3">Provide 2% discount to the next time</label>
+                </div>
+                <div class='input'>
+                    <input type="checkbox" id="check4" name="gift" value="pen">
+                    <label for="check4">Branded pen or pencil </label>
+                </div>
+                
+                <div class='total__bag'></div>
+                <button type='submit' class="order-btn">Complete</button>
+            </form>
+        </div>
      </main>
      <script src="js/bundle.js"></script>
 </body>

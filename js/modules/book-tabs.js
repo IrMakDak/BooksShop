@@ -1,6 +1,6 @@
 
 class BookTab {
-    constructor(src, alt, author, bookName, price, descr, parent) {
+    constructor(src, alt, author, bookName, price, descr, id, parent) {
         this.src = src;
         this.alt = alt;
         this.author = author;
@@ -8,6 +8,7 @@ class BookTab {
         this.price = price;
         this.parent = document.querySelector(parent);
         this.descr = descr;
+        this.id = id;
     }
     render() {
         const element = document.createElement('li');
@@ -18,7 +19,7 @@ class BookTab {
                     <div class="book__author">${this.author}</div>
                     <div class="book__name">${this.bookName}</div>
                     <div class="book__price">${this.price}$</div>
-                    <a href="#" class="show-more">Show more</a>
+                    <a href="#" class="show-more" data-id="${this.id}">Show more</a>
                     <button class="add-to-bag">Add to bag</button>
                     <div class='book__descr hide'>
                         ${this.descr}
