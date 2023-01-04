@@ -22,14 +22,11 @@ function countTotal(delThisPrice) {
 
     let priceArr = findAllPrices();
     const total = document.querySelector('.bag__total');
-    console.log(total);
 
     let counter = true;
     priceArr = priceArr.map((num) => {
         
         num = Number.parseFloat(num).toFixed(2);
-        console.log(num);
-        console.log(delThisPrice)
         if (delThisPrice && num == delThisPrice && counter === 'true') {
             counter = false;
             return 0
@@ -37,10 +34,8 @@ function countTotal(delThisPrice) {
             return num            
         }
     });
-    console.log(priceArr)
     let totalPrice = Number(priceArr.reduce(
         (previousValue, currentValue) => +previousValue + +currentValue, 0));
-    console.log('total',totalPrice)
     totalPrice = totalPrice.toFixed(2);
 
     total.innerHTML = `Total: ${'' + totalPrice}$`;

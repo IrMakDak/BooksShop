@@ -2,6 +2,7 @@ import showModal from "./openModal";
 import {closeModal} from "./closeModal"; 
 import pressCloseModal from "./closeModal";
 import modalHelper from "./modalHelp";
+import finishedOrder from './finishedOrder';
 
 function createOrderForm (totalPrice) {
 
@@ -18,7 +19,6 @@ function createOrderForm (totalPrice) {
 
         const data = new FormData(orderForm);
         data.gifts = [];
-        console.log(orderBtn)
         orderBtn.setAttribute("disabled", "true");
 
         inputs.forEach(item => {
@@ -36,7 +36,6 @@ function createOrderForm (totalPrice) {
                             item.checked = false;
                             modalHelper(document.querySelector('.order-btn'), "Choose 2 gifts")
                         } else {
-                            console.log("added", item)
                             data.gifts.push(item.value);
                         }
                     } 
@@ -75,7 +74,8 @@ function createOrderForm (totalPrice) {
             data.house = document.querySelector('.order-house').value;
             data.flat = document.querySelector('.order-flat').value;
 
-            console.log(data)
+            closeModal(orderBG);
+            finishedOrder(data);
         })
     })
 }

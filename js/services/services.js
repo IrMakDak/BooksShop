@@ -76,7 +76,6 @@ const books = {
 };
 
 const getResource = () => {
-    console.log(books.booksDB)
     return books.booksDB;
 };
 

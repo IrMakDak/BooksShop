@@ -28,7 +28,10 @@ function pressCloseModal(modalSelector) {
                         i.checked = false;
                     }
                 }) 
-            }   
+            } 
+            if (modalSelector === ".popUp-back") {
+                modal.remove();
+            }
         }
     })
 
@@ -44,6 +47,9 @@ function pressCloseModal(modalSelector) {
                         i.checked = false;
                     }
                 }) 
+            }
+            if (modalSelector === ".popUp-back") {
+                modal.remove();
             }
         }
     })

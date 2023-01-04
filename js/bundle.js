@@ -43,14 +43,11 @@ function countTotal(delThisPrice) {
 
     let priceArr = findAllPrices();
     const total = document.querySelector('.bag__total');
-    console.log(total);
 
     let counter = true;
     priceArr = priceArr.map((num) => {
         
         num = Number.parseFloat(num).toFixed(2);
-        console.log(num);
-        console.log(delThisPrice)
         if (delThisPrice && num == delThisPrice && counter === 'true') {
             counter = false;
             return 0
@@ -58,10 +55,8 @@ function countTotal(delThisPrice) {
             return num            
         }
     });
-    console.log(priceArr)
     let totalPrice = Number(priceArr.reduce(
         (previousValue, currentValue) => +previousValue + +currentValue, 0));
-    console.log('total',totalPrice)
     totalPrice = totalPrice.toFixed(2);
 
     total.innerHTML = `Total: ${'' + totalPrice}$`;
@@ -251,7 +246,10 @@ function pressCloseModal(modalSelector) {
                         i.checked = false;
                     }
                 }) 
-            }   
+            } 
+            if (modalSelector === ".popUp-back") {
+                modal.remove();
+            }
         }
     })
 
@@ -268,12 +266,50 @@ function pressCloseModal(modalSelector) {
                     }
                 }) 
             }
+            if (modalSelector === ".popUp-back") {
+                modal.remove();
+            }
         }
     })
 }
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pressCloseModal);
+
+/***/ }),
+
+/***/ "./js/modules/finishedOrder.js":
+/*!*************************************!*\
+  !*** ./js/modules/finishedOrder.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _closeModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./closeModal */ "./js/modules/closeModal.js");
+/* harmony import */ var _openModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./openModal */ "./js/modules/openModal.js");
+
+
+
+function finishedOrder(data) {
+    const finishedForm = document.createElement("div");
+    finishedForm.classList.add("popUp-back");
+    (0,_openModal__WEBPACK_IMPORTED_MODULE_1__["default"])(finishedForm);
+    finishedForm.innerHTML = `
+        <div class='popUp__window_small'>
+            <div class='close'>&#10006;</div>
+            <div class='popUp__name'>The order created. The delivery address is ${data.street} street house ${data.house} flat ${data.flat}. Customer ${data.name} ${data.surname}. ${data.deliveryData}</div>
+        </div>
+    `;
+    const main = document.querySelector('main');
+
+    main.append(finishedForm);
+    (0,_closeModal__WEBPACK_IMPORTED_MODULE_0__["default"])(".popUp-back");
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (finishedOrder);
 
 /***/ }),
 
@@ -519,8 +555,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _openModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./openModal */ "./js/modules/openModal.js");
 /* harmony import */ var _closeModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./closeModal */ "./js/modules/closeModal.js");
 /* harmony import */ var _modalHelp__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modalHelp */ "./js/modules/modalHelp.js");
+/* harmony import */ var _finishedOrder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./finishedOrder */ "./js/modules/finishedOrder.js");
 
  
+
 
 
 
@@ -539,7 +577,6 @@ function createOrderForm (totalPrice) {
 
         const data = new FormData(orderForm);
         data.gifts = [];
-        console.log(orderBtn)
         orderBtn.setAttribute("disabled", "true");
 
         inputs.forEach(item => {
@@ -557,7 +594,6 @@ function createOrderForm (totalPrice) {
                             item.checked = false;
                             (0,_modalHelp__WEBPACK_IMPORTED_MODULE_2__["default"])(document.querySelector('.order-btn'), "Choose 2 gifts")
                         } else {
-                            console.log("added", item)
                             data.gifts.push(item.value);
                         }
                     } 
@@ -596,7 +632,8 @@ function createOrderForm (totalPrice) {
             data.house = document.querySelector('.order-house').value;
             data.flat = document.querySelector('.order-flat').value;
 
-            console.log(data)
+            (0,_closeModal__WEBPACK_IMPORTED_MODULE_1__.closeModal)(orderBG);
+            (0,_finishedOrder__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
         })
     })
 }
@@ -692,7 +729,6 @@ const books = {
 };
 
 const getResource = () => {
-    console.log(books.booksDB)
     return books.booksDB;
 };
 
