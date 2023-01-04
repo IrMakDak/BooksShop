@@ -189,29 +189,28 @@ header {
 }
 
 .order-form {
-    position: relative;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     width: 400px;
-    min-height: 600px;
+    height: 680px;
     background: #fff;
     padding: 0px 20px 10px 20px;
 }
 
 .order-input:invalid {
     width: 100%;
-    height: 50px;
-    margin-bottom: 20px;
+    height: 40px;
+    margin-bottom: 10px;
     border: 2px solid red;
     border-radius: 5%;
 }
 .order-input:valid {
     border: 2px solid green;
     width: 100%;
-    height: 50px;
-    margin-bottom: 20px;
+    height: 40px;
+    margin-bottom: 10px;
     border-radius: 5%;
 }
 .order-btn {
@@ -227,20 +226,23 @@ h3 {
     text-align: center;
     padding-bottom: 15px;
     margin-top: -20px;
+    margin-bottom: 0;
+    font-size: 20px;
+
 }
 .input {
     display: flex;
 }
 .close {
+    display: inline;
     /* position: absolute; */
     color: #000;
-    font-size: 50px;
-    right: 730px;
+    font-size: 40px;
     cursor: pointer;
-    top: 100px;
+
 }
 .small__title {
-    font-size: 20px;
+    font-size: 17px;
     color: #b93114;
     text-align: center;
 }

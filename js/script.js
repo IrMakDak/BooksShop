@@ -5,6 +5,7 @@ import clickAddToBag from './modules/addToBag';
 import moveMouse from './modules/moveMouse';
 import { createLoading, hideLoading } from "./modules/loading";
 
+
 window.addEventListener('DOMContentLoaded', function() {
 
     const popUp = document.createElement('div');
@@ -46,19 +47,12 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }) 
 
-    getResource('https://github.com/IrMakDak/BooksShop/blob/8550da76d711214d5194ae5070a10475635ddc74/booksDB.json/')
-        .then(data => {
-            data.booksDB.forEach(({src, alt, author, bookName, price, descr, id}) => {
-                new BookTab(src, alt, author, bookName, price, descr, id, 'ul').render();
-            });
-        })
-        .then(() => {
-            hideLoading(main);
-        })
-        .then(() => {
-
-            openPopUp(popUp);
-            clickAddToBag(bag, shoppingBag);
-            moveMouse();
-        }) 
+    const data = getResource();
+    data.forEach(({src, alt, author, bookName, price, descr, id}) => {
+        new BookTab(src, alt, author, bookName, price, descr, id, 'ul').render();
+    });
+    hideLoading(main);
+    openPopUp(popUp);
+    clickAddToBag(bag, shoppingBag);
+    moveMouse();
 });

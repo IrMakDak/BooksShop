@@ -93,36 +93,31 @@ function formBag() {
     const bagWindow = document.querySelector('.bag__window');
 
     createLoading(bagWindow);
-    getResource('https://github.com/IrMakDak/BooksShop/blob/8550da76d711214d5194ae5070a10475635ddc74/booksDB.json/')
-        .then(data => {
-            data.booksDB.forEach((item) => {
-                if (isItInLocal(item.bookName)) {
-                   
-                    const elem = document.createElement('div');
-                    elem.classList.add('bag__item');
-                    elem.innerHTML = `
-                            <div>
-                                <div class='book__name bag-name'>${item.bookName}</div>
-                                <div>${item.author}</div>
-                            </div>
-                            <div class='bag__info'>
-                                <div class="book__price bag-price">${item.price}$</div>
-                                <div class='bag__delete'>Delete</div>
-                            </div>
-                    `;
-                    
-
-                    bagWindow.append(elem);
-                    pressCloseModal('.bag');
-                }
-            })
-        })
-        .then(() => {
-            countTotal(0);
-            hideLoading(bagWindow);
-            delFromBag(bagWindow.querySelectorAll('.bag__delete'), '.bag__item');
+    const data = getResource();
+    data.forEach((item) => {
+        if (isItInLocal(item.bookName)) {
             
-        })
+            const elem = document.createElement('div');
+            elem.classList.add('bag__item');
+            elem.innerHTML = `
+                    <div>
+                        <div class='book__name bag-name'>${item.bookName}</div>
+                        <div>${item.author}</div>
+                    </div>
+                    <div class='bag__info'>
+                        <div class="book__price bag-price">${item.price}$</div>
+                        <div class='bag__delete'>Delete</div>
+                    </div>
+            `;
+            
+
+            bagWindow.append(elem);
+            pressCloseModal('.bag');
+        }
+    })
+    countTotal(0);
+    hideLoading(bagWindow);
+    delFromBag(bagWindow.querySelectorAll('.bag__delete'), '.bag__item');
     
 }
 
