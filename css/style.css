@@ -9,6 +9,7 @@ main {
 
 header {
     min-height: 500px;
+    width: 100%;
     margin-bottom: 40px;
     background: url('https://images.photowall.com/products/57491/greatest-bookshop-in-the-world.jpg?h=699&q=85');
 }
@@ -305,4 +306,42 @@ h3 {
 }
 .warning {
     color: red;
+}
+@media(max-width: 768px) {
+    header{
+        height: 200px;
+    }
+    .header__title {
+        font-size: 30px;
+    }
+    main {
+        padding: 0 10px;
+    }
+    .book-list-tabs{
+        width: 200px;
+        margin: 0 auto;
+    }
+    .book-tab {
+        flex-direction: column;
+        margin: 0;
+        width: 200px;
+        margin-top: 30px;
+    }
+    .book__img {
+        width: 200px;
+        height: 300px;
+    }
+    .book__info {
+        width: 200px;
+    }
+    .book__author {
+        font-size: 17px;
+    }
+    .book__name{
+        font-size: 20px;
+        padding-top: 10px;
+    }
+    .add-to-bag{
+        margin-top: 20px;
+    }
 }
