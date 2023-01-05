@@ -10,8 +10,11 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addOneBook": () => (/* binding */ addOneBook),
+/* harmony export */   "addToBag": () => (/* binding */ addToBag),
 /* harmony export */   "countTotal": () => (/* binding */ countTotal),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "openBag": () => (/* binding */ openBag)
 /* harmony export */ });
 /* harmony import */ var _closeModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./closeModal */ "./js/modules/closeModal.js");
 /* harmony import */ var _localStorage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./localStorage */ "./js/modules/localStorage.js");
@@ -81,7 +84,13 @@ function delFromBag(items, parentSelector) {
         })
     })  
 }
+function addToBag(parent) {
+    
+    let bookName = parent.querySelector('.book__name').textContent;
+    let price = parent.querySelector('.book__price').textContent;
 
+    (0,_localStorage__WEBPACK_IMPORTED_MODULE_1__["default"])(bookName, price);
+}
 //click ADD-TO-BAG button
 function clickAddToBag(bag, shoppingBag) {
 
@@ -89,13 +98,9 @@ function clickAddToBag(bag, shoppingBag) {
     addToBagBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-
             let parent = e.target.closest('.book__info'); 
-            let bookName = parent.querySelector('.book__name').textContent;
-            let price = parent.querySelector('.book__price').textContent;
 
-            (0,_localStorage__WEBPACK_IMPORTED_MODULE_1__["default"])(bookName, price);
-
+            addToBag(parent);
             openBag(bag);
         })
     })
@@ -152,6 +157,44 @@ function openBag(bag) {
         `;
         formBag();
 }
+function addOneBook(itemId) {
+
+    let parent = document.getElementById(itemId);
+    let bagWindow = document.querySelector(".bag__window");
+
+    let bookName = parent.querySelector('.book__name').textContent;
+    let price = parent.querySelector('.book__price').textContent;
+    let author = parent.querySelector(".book__author").textContent;
+
+    if (!(0,_localStorage__WEBPACK_IMPORTED_MODULE_1__.isItInLocal)(bookName)) {
+
+        const elem = document.createElement('div');
+        elem.classList.add('bag__item');
+        elem.innerHTML = `
+                <div>
+                    <div class='book__name bag-name'>${bookName}</div>
+                    <div>${author}</div>
+                </div>
+                <div class='bag__info'>
+                    <div class="book__price bag-price">${price}</div>
+                    <div class='bag__delete'>Delete</div>
+                </div>
+        `;
+        bagWindow.append(elem);
+    }
+    else {
+        const elem = document.createElement('div');
+        elem.classList.add('bag__item');
+        elem.innerHTML = `
+            <div class='book__name bag-name warning'>This book is already in your cart</div>
+        `;
+        bagWindow.append(elem);
+
+        setTimeout(() => {
+            elem.remove();
+        }, 1000)
+    }
+}
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (clickAddToBag);
@@ -168,7 +211,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-
 class BookTab {
     constructor(src, alt, author, bookName, price, descr, id, parent) {
         this.src = src;
@@ -182,14 +224,16 @@ class BookTab {
     }
     render() {
         const element = document.createElement('li');
-        element.classList.add('book-tab')
+        element.classList.add('book-tab');
+        element.setAttribute("id", this.id);
+        element.setAttribute("draggable", "true");
         element.innerHTML = `
                 <img src='${this.src}' alt=${this.alt} class="book__img">
                 <div class='book__info'>
                     <div class="book__author">${this.author}</div>
                     <div class="book__name">${this.bookName}</div>
                     <div class="book__price">${this.price}$</div>
-                    <a href="#" class="show-more" data-id="${this.id}">Show more</a>
+                    <a href="#" class="show-more">Show more</a>
                     <button class="add-to-bag">Add to bag</button>
                     <div class='book__descr hide'>
                         ${this.descr}
@@ -197,6 +241,7 @@ class BookTab {
                 </div>
             `;
         this.parent.append(element);
+
     }
 }
 
@@ -215,9 +260,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "closeModal": () => (/* binding */ closeModal),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _openModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./openModal */ "./js/modules/openModal.js");
-
-
 function closeModal(modal) {
 
     modal.classList.add('hide');
@@ -236,45 +278,105 @@ function pressCloseModal(modalSelector) {
 
     document.addEventListener('keydown', (e) => {
         if (e.code === 'Escape' && modal.classList.contains('show')) {
-            closeModal(modal);
-            if (modalSelector === '.order-bg') {
-                (0,_openModal__WEBPACK_IMPORTED_MODULE_0__["default"])(document.querySelector('.bag'));
-                const inputs = document.querySelectorAll("input");
-                inputs.forEach(i => {
-                    i.value = "";
-                    if (i.type === 'checkbox') {
-                        i.checked = false;
-                    }
-                }) 
-            } 
-            if (modalSelector === ".popUp-back") {
-                modal.remove();
+            if (modalSelector === ".popUp-back" || modalSelector === ".order-bg") {
+                closeWithReload(modal);
+            } else {
+                closeWithoutReload(modal, modalSelector);
             }
         }
     })
 
     modal.addEventListener('click', (e) => {
-        if ((e.target.classList.contains('close') || e.target == modal) && modal.classList.contains('show')) {
-            closeModal(modal);
-            if (modalSelector === '.order-bg') {
-                (0,_openModal__WEBPACK_IMPORTED_MODULE_0__["default"])(document.querySelector('.bag'));
-                const inputs = document.querySelectorAll("input");
-                inputs.forEach(i => {
-                    i.value = "";
-                    if (i.type === 'checkbox') {
-                        i.checked = false;
-                    }
-                }) 
+        if (modal.classList.contains('show')) {
+
+            if (e.target.classList.contains('close') &&  modalSelector === ".order-bg") {
+                closeWithReload(modal);
             }
-            if (modalSelector === ".popUp-back") {
-                modal.remove();
+            else {
+                if ((e.target.classList.contains('close') || e.target == modal) && modalSelector !== ".order-bg") {
+                    if (modalSelector === ".popUp-back") {
+                        closeWithReload(modal);
+                    } else {
+                        closeWithoutReload(modal, modalSelector);
+                    }
+                }
             }
         }
     })
 }
+const closeWithoutReload = (modal, modalSelector) => {
+    closeModal(modal);
+    if (modalSelector === '.order-bg') {
+        const inputs = document.querySelectorAll("input");
+        inputs.forEach(i => {
+            if (i.type === 'checkbox' || i.type === 'radio') {
+                i.checked = false;
+            }
+        }) 
+    }
+}
+const closeWithReload = (modal) => {
+    closeModal(modal);
+    modal.remove();
+    location.reload();
+}
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pressCloseModal);
+
+/***/ }),
+
+/***/ "./js/modules/dragDrop.js":
+/*!********************************!*\
+  !*** ./js/modules/dragDrop.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _addToBag__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addToBag */ "./js/modules/addToBag.js");
+
+
+function dragDrop() {
+    const bookItems = document.querySelectorAll(".book-tab");
+
+    bookItems.forEach(item => {
+        item.ondragstart = drag;
+    })
+
+    const bagIcon = document.querySelector(".shopping-bag");
+    const bag = document.querySelector(".bag");
+    bag
+
+    bagIcon.ondragover = allowOpenBag;
+    bag.ondragover = allowDrop;
+    bag.ondrop = drop;
+
+    function allowOpenBag(e) {
+        e.preventDefault();
+        (0,_addToBag__WEBPACK_IMPORTED_MODULE_0__.openBag)(bag);
+    }
+    function allowDrop(e) {
+        e.preventDefault();
+    }
+
+    function drag(e) {
+        e.dataTransfer.setData("id", e.target.id);
+    }
+
+    function drop(e) {
+        let itemId = e.dataTransfer.getData("id");
+
+        let parent = document.getElementById(itemId);
+        (0,_addToBag__WEBPACK_IMPORTED_MODULE_0__.addOneBook)(itemId);
+        (0,_addToBag__WEBPACK_IMPORTED_MODULE_0__.addToBag)(parent);
+    }
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (dragDrop);
+
 
 /***/ }),
 
@@ -293,19 +395,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function finishedOrder(data) {
-    const finishedForm = document.createElement("div");
+const finishedOrder = (data) => {
+    let finishedForm = document.createElement("div");
     finishedForm.classList.add("popUp-back");
     (0,_openModal__WEBPACK_IMPORTED_MODULE_1__["default"])(finishedForm);
     finishedForm.innerHTML = `
         <div class='popUp__window_small'>
             <div class='close'>&#10006;</div>
-            <div class='popUp__name'>The order created. The delivery address is ${data.street} street house ${data.house} flat ${data.flat}. Customer ${data.name} ${data.surname}. ${data.deliveryData}</div>
+            <div class='popUp__name'>The order created. The delivery address is ${data.street} street house ${data.house} flat ${data.flat}. Customer ${data.name} ${data.surname}. <br>${data.deliveryData}</div>
         </div>
     `;
     const main = document.querySelector('main');
 
     main.append(finishedForm);
+
     (0,_closeModal__WEBPACK_IMPORTED_MODULE_0__["default"])(".popUp-back");
 }
 
@@ -562,42 +665,68 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function createOrderForm (totalPrice) {
+function createOrderForm () {
 
     const makeOrder = document.querySelector('.bag__order');
+    let todayData = new Date();
+    let day = todayData.getDate();
+    let mouth = todayData.getMonth() + 1;
+
 
     makeOrder.addEventListener('click', () => {
-        const price = totalPrice;
 
         const orderBG = document.querySelector('.order-bg');
         const inputs = orderBG.querySelectorAll('input');
         const orderBtn = orderBG.querySelector('.order-btn');
         const orderForm = orderBG.querySelector('.order-form');
         const inputData = document.querySelector('.order-data');
+        const cash = document.querySelector("#radio1");
+        const card = document.querySelector("#radio2");
 
-        const data = new FormData(orderForm);
-        data.gifts = [];
+        let gifts = [];
+        let payment = "cash";
+
+        cash.checked = true;
         orderBtn.setAttribute("disabled", "true");
 
+
+        const allChecks = [];
+        inputs.forEach(item => {
+            if (item.type === "checkbox") {
+                allChecks.push(item);
+                item.checked = false;
+            }
+        })
+
+        allChecks.forEach(i => {
+            i.addEventListener('click', () => {      
+                if (i.checked === true) {
+                    if (gifts.length < 2) {
+                        i.checked = true;
+                        gifts.push(i.name);
+                    } else {
+                        i.checked = false;
+                        (0,_modalHelp__WEBPACK_IMPORTED_MODULE_2__["default"])(orderForm, '2 gifts already selected');
+                    }
+                }
+                if (i.checked === false) {
+                    gifts = gifts.filter(h => h !== i.name)
+                }
+            })
+        })
+
+        cash.addEventListener('click', () => {
+            cash.checked = true;
+            card.checked = false;
+            payment = "cash";
+        }) 
+        card.addEventListener('click', () => {
+            cash.checked = false;
+            card.checked = true;
+            payment = "card";
+        })
         inputs.forEach(item => {
             item.addEventListener("change", () => {
-                if (item.type === 'radio') {
-                    data.pay = item.value;
-                }
-                if (item.type === 'checkbox') {
-
-                    if (item.checked === false) {
-                        data.gifts = data.gifts.filter(i => i !== item.value)
-                    }
-                    if (item.checked === true) {
-                        if (data.gifts.length >= 2) {
-                            item.checked = false;
-                            (0,_modalHelp__WEBPACK_IMPORTED_MODULE_2__["default"])(document.querySelector('.order-btn'), "Choose 2 gifts")
-                        } else {
-                            data.gifts.push(item.value);
-                        }
-                    } 
-                }
                 if (orderForm.checkValidity() && orderBtn.getAttribute("disabled")) {
                     orderBtn.removeAttribute("disabled");
                 } 
@@ -621,9 +750,9 @@ function createOrderForm (totalPrice) {
 
             e.preventDefault();
 
-            if (!data.pay) {
-                data.pay = "cash";
-            }
+            const data = new FormData(orderForm);
+            data.gifts = gifts;
+            data.payment = payment;
 
             data.name = document.querySelector('.order-name').value;
             data.surname = document.querySelector('.order-surname').value;
@@ -632,8 +761,12 @@ function createOrderForm (totalPrice) {
             data.house = document.querySelector('.order-house').value;
             data.flat = document.querySelector('.order-flat').value;
 
-            (0,_closeModal__WEBPACK_IMPORTED_MODULE_1__.closeModal)(orderBG);
-            (0,_finishedOrder__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
+            if (!orderBtn.getAttribute("disabled")) {
+                (0,_closeModal__WEBPACK_IMPORTED_MODULE_1__.closeModal)(orderBG);
+                (0,_finishedOrder__WEBPACK_IMPORTED_MODULE_3__["default"])(data);
+                orderBtn.setAttribute("disabled", "true");
+                console.log("Your order - ",data)
+            }
         })
     })
 }
@@ -805,6 +938,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_addToBag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/addToBag */ "./js/modules/addToBag.js");
 /* harmony import */ var _modules_moveMouse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/moveMouse */ "./js/modules/moveMouse.js");
 /* harmony import */ var _modules_loading__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/loading */ "./js/modules/loading.js");
+/* harmony import */ var _modules_dragDrop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/dragDrop */ "./js/modules/dragDrop.js");
+
 
 
 
@@ -862,6 +997,8 @@ window.addEventListener('DOMContentLoaded', function() {
     (0,_modules_openPopUp__WEBPACK_IMPORTED_MODULE_1__["default"])(popUp);
     (0,_modules_addToBag__WEBPACK_IMPORTED_MODULE_3__["default"])(bag, shoppingBag);
     (0,_modules_moveMouse__WEBPACK_IMPORTED_MODULE_4__["default"])();
+
+    (0,_modules_dragDrop__WEBPACK_IMPORTED_MODULE_6__["default"])();
 });
 
 })();

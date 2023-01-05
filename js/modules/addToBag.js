@@ -60,7 +60,13 @@ function delFromBag(items, parentSelector) {
         })
     })  
 }
+function addToBag(parent) {
+    
+    let bookName = parent.querySelector('.book__name').textContent;
+    let price = parent.querySelector('.book__price').textContent;
 
+    dataToLocalStorage(bookName, price);
+}
 //click ADD-TO-BAG button
 function clickAddToBag(bag, shoppingBag) {
 
@@ -68,13 +74,9 @@ function clickAddToBag(bag, shoppingBag) {
     addToBagBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-
             let parent = e.target.closest('.book__info'); 
-            let bookName = parent.querySelector('.book__name').textContent;
-            let price = parent.querySelector('.book__price').textContent;
 
-            dataToLocalStorage(bookName, price);
-
+            addToBag(parent);
             openBag(bag);
         })
     })
@@ -131,6 +133,44 @@ function openBag(bag) {
         `;
         formBag();
 }
+function addOneBook(itemId) {
 
-export {countTotal};
+    let parent = document.getElementById(itemId);
+    let bagWindow = document.querySelector(".bag__window");
+
+    let bookName = parent.querySelector('.book__name').textContent;
+    let price = parent.querySelector('.book__price').textContent;
+    let author = parent.querySelector(".book__author").textContent;
+
+    if (!isItInLocal(bookName)) {
+
+        const elem = document.createElement('div');
+        elem.classList.add('bag__item');
+        elem.innerHTML = `
+                <div>
+                    <div class='book__name bag-name'>${bookName}</div>
+                    <div>${author}</div>
+                </div>
+                <div class='bag__info'>
+                    <div class="book__price bag-price">${price}</div>
+                    <div class='bag__delete'>Delete</div>
+                </div>
+        `;
+        bagWindow.append(elem);
+    }
+    else {
+        const elem = document.createElement('div');
+        elem.classList.add('bag__item');
+        elem.innerHTML = `
+            <div class='book__name bag-name warning'>This book is already in your cart</div>
+        `;
+        bagWindow.append(elem);
+
+        setTimeout(() => {
+            elem.remove();
+        }, 1000)
+    }
+}
+
+export {countTotal, openBag, addToBag, addOneBook};
 export default clickAddToBag;

@@ -21,7 +21,7 @@
 
                 <input placeholder="Surname: " class='order-surname order-input' required type="text" pattern="^[a-zA-Z]+$" minlength="5">
 
-                <input placeholder="Delivery date: " class='order-data order-input' required type="text" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](202[2-3])">
+                <input placeholder="Delivery date: " class='order-data order-input' required type="text" pattern="(0[1-9]|1[0-9]|2[0-9]|3[0-1])[- /.](0[1-9]|1[0-2])[- /.](202[3])">
 
                 <input placeholder="Street: " class='order-street order-input' required type="text" pattern="^[а-яА-ЯёЁa-zA-Z0-9]+$" minlength="5">
 
@@ -31,28 +31,28 @@
 
                 <div class='small__title'>Payment type</div>
                 <div class='input'>
-                    <input type='radio' id='radio1' name='pay' value='cash' checked="true">
+                    <input type='radio' id='radio1' name='cash'>
                     <label for='radio1'>Cash</label>
                 </div>
                 <div class='input'>
-                    <input type='radio' id='ratio2' name='pay' value='card'>
-                    <label for='ratio2'>Card</label>
+                    <input type='radio' id='radio2' name='card'>
+                    <label for='radio2'>Card</label>
                 </div>
                 <div class='small__title'>Choose 2 gifts</div>
                 <div class='input'>
-                    <input type="checkbox" id="check1" name="gift" value="wrapper">
+                    <input type="checkbox" id="check1" name="wrapper">
                     <label for="check1">Pack as a gift</label>
                 </div>
                 <div class='input'>
-                    <input type="checkbox" id="check2" name="gift" value="postcard">
+                    <input type="checkbox" id="check2" name="postcard">
                     <label for="check2">Add postcard</label>
                 </div>
                 <div class='input'>
-                    <input type="checkbox" id="check3" name="gift" value="sale">
+                    <input type="checkbox" id="check3"  name="sale">
                     <label for="check3">Provide 2% discount to the next time</label>
                 </div>
                 <div class='input'>
-                    <input type="checkbox" id="check4" name="gift" value="pen">
+                    <input type="checkbox" id="check4" name="pen">
                     <label for="check4">Branded pen or pencil </label>
                 </div>
                 

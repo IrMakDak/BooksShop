@@ -303,3 +303,6 @@ h3 {
 .hide {
     display: none;
 }
+.warning {
+    color: red;
+}

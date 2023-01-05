@@ -4,6 +4,7 @@ import {getResource} from './services/services';
 import clickAddToBag from './modules/addToBag';
 import moveMouse from './modules/moveMouse';
 import { createLoading, hideLoading } from "./modules/loading";
+import dragDrop from "./modules/dragDrop";
 
 
 window.addEventListener('DOMContentLoaded', function() {
@@ -55,4 +56,6 @@ window.addEventListener('DOMContentLoaded', function() {
     openPopUp(popUp);
     clickAddToBag(bag, shoppingBag);
     moveMouse();
+
+    dragDrop();
 });
