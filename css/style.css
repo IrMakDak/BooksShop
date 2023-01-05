@@ -344,4 +344,70 @@ h3 {
     .add-to-bag{
         margin-top: 20px;
     }
+    .popUp__window{
+        margin-top: 5px;
+        width: 300px;
+        padding: 10px;
+        max-height: 80%;
+        overflow: hidden;
+    }
+    .popUp__name{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .popUp__author{
+        font-size: 20px;
+    }
+    .popUp__descr{
+        font-size: 14px;
+    }
+    .bag__window{
+        width: 300px;
+        padding: 10px;
+    }
+    .bag__item{
+        flex-direction: column;
+    }
+    .bag__total{
+        font-size: 20px;
+    }
+    .book__price{
+        font-size: 20px;
+        padding-top: 15px;
+    }
+    .bag__order{
+        font-size: 15px;
+        padding: 16px;
+        height: 50px;
+    }
+    .bag__delete{
+        margin-top: 15px;
+        font-size: 20px;
+        height: 40px;
+    }
+    .bag__menu{
+        margin-bottom: 20px;
+    }
+    .order-form{
+        width: 300px;
+    }
+    label{
+        font-size: 15px;
+    }
+    .helper{
+        left: 0;
+        top: -100px;
+    }
+    .popUp__window_small{
+        width: 300px;
+        padding: 10px;
+        height: auto;
+    }
+    .shopping-bag__icon{
+        width: 70px;
+        height: 70px;
+    }
+    .close{
+        font-size: 25px;
+    }
 }
