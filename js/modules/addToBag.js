@@ -157,6 +157,11 @@ function addOneBook(itemId) {
                 </div>
         `;
         bagWindow.append(elem);
+        let del = elem.querySelector(".bag__delete");
+        del.addEventListener('click', () => {
+            localStorage.removeItem(bookName);
+            elem.remove();
+        })
     }
     else {
         const elem = document.createElement('div');
