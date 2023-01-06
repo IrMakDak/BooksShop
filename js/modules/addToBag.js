@@ -161,6 +161,7 @@ function addOneBook(itemId) {
         del.addEventListener('click', () => {
             localStorage.removeItem(bookName);
             elem.remove();
+            countTotal(price);
         })
     }
     else {

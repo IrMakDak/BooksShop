@@ -1,4 +1,4 @@
-import { openBag, addToBag, addOneBook } from "./addToBag";
+import { openBag, addToBag, addOneBook, countTotal } from "./addToBag";
 
 function dragDrop() {
     const bookItems = document.querySelectorAll(".book-tab");
@@ -32,6 +32,7 @@ function dragDrop() {
 
         let parent = document.getElementById(itemId);
         addOneBook(itemId);
+        countTotal(0);
         addToBag(parent);
     }
 }

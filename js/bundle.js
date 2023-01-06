@@ -185,6 +185,7 @@ function addOneBook(itemId) {
         del.addEventListener('click', () => {
             localStorage.removeItem(bookName);
             elem.remove();
+            countTotal(price);
         })
     }
     else {
@@ -233,7 +234,7 @@ class BookTab {
         element.setAttribute("id", this.id);
         element.setAttribute("draggable", "true");
         element.innerHTML = `
-                <img src='${this.src}' alt=${this.alt} class="book__img">
+                <img src='${this.src}' alt=${this.alt} class="book__img" draggable="false">
                 <div class='book__info'>
                     <div class="book__author">${this.author}</div>
                     <div class="book__name">${this.bookName}</div>
@@ -376,6 +377,7 @@ function dragDrop() {
 
         let parent = document.getElementById(itemId);
         (0,_addToBag__WEBPACK_IMPORTED_MODULE_0__.addOneBook)(itemId);
+        (0,_addToBag__WEBPACK_IMPORTED_MODULE_0__.countTotal)(0);
         (0,_addToBag__WEBPACK_IMPORTED_MODULE_0__.addToBag)(parent);
     }
 }

@@ -15,7 +15,7 @@ class BookTab {
         element.setAttribute("id", this.id);
         element.setAttribute("draggable", "true");
         element.innerHTML = `
-                <img src='${this.src}' alt=${this.alt} class="book__img">
+                <img src='${this.src}' alt=${this.alt} class="book__img" draggable="false">
                 <div class='book__info'>
                     <div class="book__author">${this.author}</div>
                     <div class="book__name">${this.bookName}</div>
