@@ -116,7 +116,7 @@ function formBag() {
     (0,_loading__WEBPACK_IMPORTED_MODULE_5__.createLoading)(bagWindow);
     (0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)()
     .then(data => {
-        data.forEach((item) => {
+        data.booksDB.forEach((item) => {
             if ((0,_localStorage__WEBPACK_IMPORTED_MODULE_1__.isItInLocal)(item.bookName)) {
                 
                 const elem = document.createElement('div');
@@ -932,7 +932,7 @@ window.addEventListener('DOMContentLoaded', function() {
     ;(0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)()
     .then(data => {
         console.log(data);
-        data.forEach(({src, alt, author, bookName, price, descr, id}) => {
+        data.booksDB.forEach(({src, alt, author, bookName, price, descr, id}) => {
             new _modules_book_tabs__WEBPACK_IMPORTED_MODULE_0__["default"](src, alt, author, bookName, price, descr, id, 'ul').render();
         })
     })

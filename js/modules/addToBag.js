@@ -92,7 +92,7 @@ function formBag() {
     createLoading(bagWindow);
     getResource()
     .then(data => {
-        data.forEach((item) => {
+        data.booksDB.forEach((item) => {
             if (isItInLocal(item.bookName)) {
                 
                 const elem = document.createElement('div');
