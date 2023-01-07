@@ -48,14 +48,20 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }) 
 
-    const data = getResource();
-    data.forEach(({src, alt, author, bookName, price, descr, id}) => {
-        new BookTab(src, alt, author, bookName, price, descr, id, 'ul').render();
-    });
-    hideLoading(main);
-    openPopUp(popUp);
-    clickAddToBag(bag, shoppingBag);
-    moveMouse();
+    getResource()
+    .then(data => {
+        console.log(data);
+        data.forEach(({src, alt, author, bookName, price, descr, id}) => {
+            new BookTab(src, alt, author, bookName, price, descr, id, 'ul').render();
+        })
+    })
+    .then(() => {
+        hideLoading(main);
+        openPopUp(popUp);
+        clickAddToBag(bag, shoppingBag);
+        moveMouse();
 
-    dragDrop();
+        dragDrop();
+    })
+    
 });

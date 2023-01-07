@@ -90,32 +90,35 @@ function formBag() {
     const bagWindow = document.querySelector('.bag__window');
 
     createLoading(bagWindow);
-    const data = getResource();
-    data.forEach((item) => {
-        if (isItInLocal(item.bookName)) {
-            
-            const elem = document.createElement('div');
-            elem.classList.add('bag__item');
-            elem.innerHTML = `
-                    <div>
-                        <div class='book__name bag-name'>${item.bookName}</div>
-                        <div>${item.author}</div>
-                    </div>
-                    <div class='bag__info'>
-                        <div class="book__price bag-price">${item.price}$</div>
-                        <div class='bag__delete'>Delete</div>
-                    </div>
-            `;
-            
+    getResource()
+    .then(data => {
+        data.forEach((item) => {
+            if (isItInLocal(item.bookName)) {
+                
+                const elem = document.createElement('div');
+                elem.classList.add('bag__item');
+                elem.innerHTML = `
+                        <div>
+                            <div class='book__name bag-name'>${item.bookName}</div>
+                            <div>${item.author}</div>
+                        </div>
+                        <div class='bag__info'>
+                            <div class="book__price bag-price">${item.price}$</div>
+                            <div class='bag__delete'>Delete</div>
+                        </div>
+                `;
+                
 
-            bagWindow.append(elem);
-            pressCloseModal('.bag');
-        }
+                bagWindow.append(elem);
+                pressCloseModal('.bag');
+            }
+        })
     })
-    countTotal(0);
-    hideLoading(bagWindow);
-    delFromBag(bagWindow.querySelectorAll('.bag__delete'), '.bag__item');
-    
+    .then(() => {
+        countTotal(0);
+        hideLoading(bagWindow);
+        delFromBag(bagWindow.querySelectorAll('.bag__delete'), '.bag__item');
+    })
 }
 
 //form modal window, 'close' btn, total
