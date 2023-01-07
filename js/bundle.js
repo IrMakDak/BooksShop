@@ -931,7 +931,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     ;(0,_services_services__WEBPACK_IMPORTED_MODULE_2__.getResource)()
     .then(data => {
-        console.log(data);
+        console.log(data.booksDB);
         data.booksDB.forEach(({src, alt, author, bookName, price, descr, id}) => {
             new _modules_book_tabs__WEBPACK_IMPORTED_MODULE_0__["default"](src, alt, author, bookName, price, descr, id, 'ul').render();
         })

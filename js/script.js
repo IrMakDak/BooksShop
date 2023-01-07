@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     getResource()
     .then(data => {
-        console.log(data);
+        console.log(data.booksDB);
         data.booksDB.forEach(({src, alt, author, bookName, price, descr, id}) => {
             new BookTab(src, alt, author, bookName, price, descr, id, 'ul').render();
         })
