@@ -795,7 +795,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getResource": () => (/* binding */ getResource)
 /* harmony export */ });
 const getResource = async() => {
-  const res = await fetch('./booksDB', {
+  const res = await fetch('https://irmakdak.github.io/BooksShop/booksDB.json', {
     method: "GET"
   }) 
   if (!res.ok) {
