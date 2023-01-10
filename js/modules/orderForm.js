@@ -6,12 +6,19 @@ import finishedOrder from './finishedOrder';
 
 function createOrderForm () {
 
+    function checkDateValidation(target) {
+        const currentDate = Date.now();
+        const deliveryDate = target.valueAsNumber;
+      
+        if (deliveryDate > currentDate) {
+            target.setCustomValidity("");
+        } else {
+            target.setCustomValidity("Delivery time: one day from the current date")
+        }
+        target.reportValidity();
+      }
+
     const makeOrder = document.querySelector('.bag__order');
-    let todayData = new Date();
-    let day = todayData.getDate();
-    let mouth = todayData.getMonth() + 1;
-
-
     makeOrder.addEventListener('click', () => {
 
         const orderBG = document.querySelector('.order-bg');
@@ -65,7 +72,10 @@ function createOrderForm () {
             payment = "card";
         })
         inputs.forEach(item => {
-            item.addEventListener("change", () => {
+            item.addEventListener("change", (e) => {
+                if (item.type === "date") {
+                    checkDateValidation(e.target)  
+                }  
                 if (orderForm.checkValidity() && orderBtn.getAttribute("disabled")) {
                     orderBtn.removeAttribute("disabled");
                 } 
@@ -81,9 +91,9 @@ function createOrderForm () {
         showModal(orderBG); 
         pressCloseModal('.order-bg');
 
-        inputData.addEventListener('click', () => {
-            modalHelper(orderForm, 'Дата в формате XX/XX/XXXX');
-        })
+        // inputData.addEventListener('click', () => {
+        //     modalHelper(orderForm, 'Срок доставки: один день от текущей даты');
+        // })
 
         orderBtn.addEventListener('click', (e) => {
 
